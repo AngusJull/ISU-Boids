@@ -1,0 +1,19 @@
+header{
+	background-color: #000000;
+	color: white;
+}
+body{
+	color: white;
+	font-family: calibri, sans-serif;
+	background-color: #000000;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+li{
+	font-size: 110%;
+	font-style: italic;
+}
+#subtitle{
+	text-align:center;
+        text-style:bold;
+}
