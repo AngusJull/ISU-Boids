@@ -17,11 +17,14 @@ public class createBoids : MonoBehaviour
     {
         for (numBoids = 0; numBoids < targetNumBoids; ++numBoids)
         {
-            Instantiate(parentBoid).GetComponent<Transform>().position.Set(numBoids, numBoids, 0);
+            GameObject newBoid = Instantiate(parentBoid);
+            Vector3 newPos = new Vector3(5f / (float)(numBoids + 1), 0);
+            newBoid.GetComponent<Transform>().position = newPos;
+            Debug.Log(numBoids);
         }
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (numBoids < targetNumBoids)
         {
