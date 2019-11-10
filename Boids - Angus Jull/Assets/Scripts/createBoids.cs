@@ -7,8 +7,11 @@ using UnityEngine;
 public class createBoids : MonoBehaviour
 {
     #region Variables
+    //This is the boid prefab that is used to create all other boids
     public GameObject parentBoid;
+    //Keeps track of how many boids the user wants
     public int targetNumBoids;
+    //Keeps track of how many boids there currently are
     public int numBoids;
     #endregion
 
@@ -17,25 +20,35 @@ public class createBoids : MonoBehaviour
     {
         for (numBoids = 0; numBoids < targetNumBoids; ++numBoids)
         {
+            //Creates a new boid
             GameObject newBoid = Instantiate(parentBoid);
+            //This vector is offset so that the boids won't stack a ton
             Vector3 newPos = new Vector3(5f / (float)(numBoids + 1), 0);
             newBoid.GetComponent<Transform>().position = newPos;
             Debug.Log(numBoids);
         }
     }
-    // Update is called once per frame
+    // FixedUpdate is called once per physics update
     void FixedUpdate()
     {
+        //Checks if more boids are needed
         if (numBoids < targetNumBoids)
         {
-            Instantiate(parentBoid);
-            numBoids++;
-            Debug.Log("Created a Boid");
+            //Creates new boids, doesn't stop them from stacking 
+            for (; numBoids < targetNumBoids; numBoids++)
+            {
+                Instantiate(parentBoid);
+                numBoids++;
+                Debug.Log("Created a Boid");
+            }
+            
         }
+        //Checks if boids need to be destroyed
         else if (numBoids > targetNumBoids)
         {
-            GameObject[] Boids = GameObject.FindGameObjectsWithTag("Boid");
-            Destroy(Boids[0], 0.1f);
+            //Creates an array of boids, all of which
+            GameObject boid = GameObject.FindGameObjectWithTag("Boid");
+            Destroy(boid, 0.1f);
             numBoids--;
             Debug.Log("Destroyed a boid");
         }
