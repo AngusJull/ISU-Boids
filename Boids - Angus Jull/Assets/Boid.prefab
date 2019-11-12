@@ -107,7 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotateSpeed: 10
+  rotateSpeed: 45
   detectionRange: 10
   viewAngle: 360
-  alignmentStrength: 10
+  alignmentStrength: 45
+  boids: []

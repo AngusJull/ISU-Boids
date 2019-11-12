@@ -12,40 +12,60 @@ public class createBoids : MonoBehaviour
     //Keeps track of how many boids the user wants
     public uint targetNumBoids;
     //Keeps track of how many boids there currently are
-    public uint numBoids;
+    public List<GameObject> curBoids = new List<GameObject>();
+
     #endregion
 
     #region Unity Functions
-    void Start()
+    void Awake()
     {
-        for (numBoids = 0; numBoids < targetNumBoids; ++numBoids)
+        if (targetNumBoids > 200)
+        {
+            targetNumBoids = 200;
+            Debug.Log("STOP, THATS TOO MANY BOIDS");
+        }
+        for (int i = 0; i <= targetNumBoids; i++)
         {
             //Creates a new boid
             GameObject newBoid = Instantiate(parentBoid);
-            //This vector is offset so that the boids won't stack a ton
-            Vector3 newPos = new Vector3(5f / (float)(numBoids + 1), 0);
-            newBoid.GetComponent<Transform>().position = newPos;
-            Debug.Log(numBoids);
+            //Gives the boid a random direction
+            Vector3 vector3 = new Vector3(0, 0, Random.Range(-360, 360));
+            newBoid.transform.eulerAngles = vector3;
+            //Adds the boid to the list of boids
+            newBoid.GetComponent<boidBehaviours>().boids = curBoids;
+            curBoids.Add(newBoid);
         }
     }
     // FixedUpdate is called once per physics update
     void FixedUpdate()
     {
-        //Checks if more boids are needed
-        if (numBoids < targetNumBoids)
+        if (targetNumBoids > 200)
         {
-                Instantiate(parentBoid);
-                numBoids++;
-                Debug.Log("Created a Boid");
+            targetNumBoids = 200;
+            Debug.Log("Too many boids, stop.");
+        }
+        //Checks if more boids are needed
+        if (curBoids.Count < targetNumBoids)
+        {
+            for (int i = curBoids.Count; i <= targetNumBoids; i++)
+            {
+                //Creates a new boid
+                GameObject newBoid = Instantiate(parentBoid);
+                //Gives the boid a random direction
+                Vector3 vector3 = new Vector3(0, 0, Random.Range(-360, 360));
+                newBoid.transform.eulerAngles = vector3;
+                //Adds the boid to the list of boids
+                newBoid.GetComponent<boidBehaviours>().boids = curBoids;
+                curBoids.Add(newBoid);
+            }
         }
         //Checks if boids need to be destroyed
-        else if (numBoids > targetNumBoids)
+        else if (curBoids.Count > targetNumBoids)
         {
-            //Creates an array of boids, all of which
-            GameObject boid = GameObject.FindGameObjectWithTag("Boid");
+            //Destroys the boid in unity and removes it from the list
+            GameObject boid = curBoids[0];
+            curBoids.RemoveAt(0);
             Destroy(boid);
-            numBoids--;
-            Debug.Log("Destroyed a boid");
         }
     }
     #endregion
