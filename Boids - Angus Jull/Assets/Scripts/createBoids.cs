@@ -10,9 +10,9 @@ public class createBoids : MonoBehaviour
     //This is the boid prefab that is used to create all other boids
     public GameObject parentBoid;
     //Keeps track of how many boids the user wants
-    public int targetNumBoids;
+    public uint targetNumBoids;
     //Keeps track of how many boids there currently are
-    public int numBoids;
+    public uint numBoids;
     #endregion
 
     #region Unity Functions
@@ -34,21 +34,16 @@ public class createBoids : MonoBehaviour
         //Checks if more boids are needed
         if (numBoids < targetNumBoids)
         {
-            //Creates new boids, doesn't stop them from stacking 
-            for (; numBoids < targetNumBoids; numBoids++)
-            {
                 Instantiate(parentBoid);
                 numBoids++;
                 Debug.Log("Created a Boid");
-            }
-            
         }
         //Checks if boids need to be destroyed
         else if (numBoids > targetNumBoids)
         {
             //Creates an array of boids, all of which
             GameObject boid = GameObject.FindGameObjectWithTag("Boid");
-            Destroy(boid, 0.1f);
+            Destroy(boid);
             numBoids--;
             Debug.Log("Destroyed a boid");
         }
