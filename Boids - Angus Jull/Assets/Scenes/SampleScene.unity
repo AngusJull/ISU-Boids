@@ -249,7 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentBoid: {fileID: 7079898379981466171, guid: 059e210fc489e0443ad9a2eb2b5d3d7f,
     type: 3}
-  targetNumBoids: 10
+  targetNumBoids: 0
   curBoids: []
 --- !u!4 &845469349
 Transform:

@@ -109,5 +109,6 @@ MonoBehaviour:
   moveSpeed: 2
   detectionRange: 3
   viewAngle: 150
-  alignmentStrength: 40
+  alignmentStrength: 0
+  approachStrength: 50
   boids: []

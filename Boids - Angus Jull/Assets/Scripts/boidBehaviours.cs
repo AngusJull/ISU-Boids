@@ -7,7 +7,6 @@ using UnityEngine;
 public class boidBehaviours : MonoBehaviour
 {
     #region Variables
-    ///List<GameObject> boids = new List<GameObject>();
     //MoveSpeed stores how fast the boid should move forward
     public float moveSpeed;
     //Keeps track of how close boids need to be to be detected
@@ -17,9 +16,7 @@ public class boidBehaviours : MonoBehaviour
 
     //Sets how much of an affect each rule will have on the rotation of the boid
     public float alignmentStrength;
-
-    //This keeps track of the rotation of the boid
-    private Vector3 direction = new Vector3(0, 0, 0);
+    public float approachStrength;
 
     [HideInInspector]
     public List<GameObject> boids;
@@ -49,6 +46,7 @@ public class boidBehaviours : MonoBehaviour
     {
         //Rotates from where it's currently pointing towards where alignment wants the boid to point, alignment strength sets the max rotation
         transform.rotation = Quaternion.RotateTowards(transform.rotation, alignment(), alignmentStrength * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, approach(), approachStrength * Time.deltaTime);
     }
     //Checks if the distance to the other boid is less than the boid's detection range
     //Then checks if the other boid is within the boid's view angle (it can't look directly behind itself)
@@ -94,16 +92,11 @@ public class boidBehaviours : MonoBehaviour
         }
         else
         {
-            Vector3 averageFlockPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Vector3 averageFlockPos = new Vector3(0, 0, 0);
             //i stores the number of gameObjects that are included in the average
-            int i = 0;
+            int i = 1;
             foreach (GameObject gameObj in boids)
             {
-                //This component's boid has already been included in the calculation, this skips over it in the list.
-                if (gameObject.GetInstanceID() == gameObj.GetInstanceID())
-                {
-                    continue;
-                }
                 //Checks if the gameobject can be seen by the boid (as I explained in the alignment function above)
                 if (Vector3.Distance(transform.position, gameObj.transform.position) <= detectionRange &&
                     Quaternion.Angle(transform.rotation, gameObj.transform.rotation) <= viewAngle)
@@ -115,9 +108,8 @@ public class boidBehaviours : MonoBehaviour
             }
             //Averages the total
             averageFlockPos /= i;
-            return Quaternion.LookRotation(averageFlockPos, Vector3.up);
+            return Quaternion.LookRotation(averageFlockPos - transform.position, Vector3.up);
         }
-        
     }
     #endregion
 }
