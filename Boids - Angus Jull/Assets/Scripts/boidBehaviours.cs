@@ -10,8 +10,6 @@ public class boidBehaviours : MonoBehaviour
     ///List<GameObject> boids = new List<GameObject>();
     //MoveSpeed stores how fast the boid should move forward
     public float moveSpeed;
-    //RotateSpeed defines the maximum rotation speed of the boid
-    public float rotateSpeed;
     //Keeps track of how close boids need to be to be detected
     public float detectionRange;
     //This controls the field of view of the boid
@@ -20,8 +18,6 @@ public class boidBehaviours : MonoBehaviour
     //Sets how much of an affect each rule will have on the rotation of the boid
     public float alignmentStrength;
 
-    //This is to keep track of how much the boid would like to rotate
-    private float preferedRotation = 0;
     //This keeps track of the rotation of the boid
     private Vector3 direction = new Vector3(0, 0, 0);
 
@@ -45,43 +41,83 @@ public class boidBehaviours : MonoBehaviour
             boids = GameObject.FindGameObjectWithTag("Boid Creator").GetComponent<createBoids>().curBoids;
         }
     }
+    #endregion
+
+    #region My Functions
     //Applies all three boid rules
     private void boidRules()
     {
-        //Sets the prefered rotation back to 0 (it still has last time's value
-        preferedRotation = 0;
-        //Changes the prefered rotation by what alignment wants
-        preferedRotation += alignment();
-        Debug.Log(preferedRotation);
-        //Rotates by the amount that each rule wants it to, clamped to the max rotation speed
-        transform.Rotate(Vector3.forward, Mathf.Clamp(preferedRotation, -rotateSpeed, rotateSpeed) * Time.deltaTime);
+        //Rotates from where it's currently pointing towards where alignment wants the boid to point, alignment strength sets the max rotation
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, alignment(), alignmentStrength * Time.deltaTime);
     }
     //Checks if the distance to the other boid is less than the boid's detection range
     //Then checks if the other boid is within the boid's view angle (it can't look directly behind itself)
-    private float alignment()
+    private Quaternion alignment()
     {
-        Vector3 averageHeading = new Vector3(0, 0, 0);
-        int i = 0;
-        foreach (GameObject obj in boids)
+        if (boids.Count > 1)
         {
-            if (Vector3.Magnitude(transform.position - obj.transform.position) <= detectionRange &&
-                Vector3.Angle(transform.position, obj.transform.position) <= viewAngle)
+            //Used to store rotation
+            Quaternion averageHeading = transform.rotation;
+            //Stores the number of times that an object has had it's rotation added to the average. This is used to average future rotations in.
+            float j = 1f;
+            //Loops through all boids, including itself
+            for (int i = 0; i < boids.Count; i++)
             {
-                averageHeading += obj.transform.eulerAngles;
-                i++;
+                /*Since the list of boids includes this boid, and this boid's rotation was already averaged in when the
+                  quaternion was created, we don't need to use it again
+                */
+                if (boids[i].GetInstanceID() == gameObject.GetInstanceID())
+                {
+                    continue;
+                }
+                
+                //Checks if the boid is within a specified distance and if the angle from the boid's view to the 
+                if (Vector3.Distance(transform.position, boids[i].transform.position) <= detectionRange &&
+                    Quaternion.Angle(transform.rotation, boids[i].transform.rotation) <= viewAngle)
+                {
+                    averageHeading = Quaternion.Slerp(averageHeading, boids[i].transform.rotation, (1f / ++j));
+                }
             }
-        }
-        if (i != 0)
-        {
-            averageHeading.z /= i;
-            print(transform.eulerAngles - averageHeading);
-            return (Mathf.Clamp((transform.eulerAngles - averageHeading).z, -1 * alignmentStrength, alignmentStrength));
+            return averageHeading;
         }
         else
         {
-            return 0;
+            return transform.rotation;
+        }  
+    }
+    //Calculates the rotation the boid would have to turn to to get closer to the center of the other boids
+    private Quaternion approach()
+    {
+        if (boids.Count < 1)
+        {
+            return transform.rotation;
         }
-
+        else
+        {
+            Vector3 averageFlockPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            //i stores the number of gameObjects that are included in the average
+            int i = 0;
+            foreach (GameObject gameObj in boids)
+            {
+                //This component's boid has already been included in the calculation, this skips over it in the list.
+                if (gameObject.GetInstanceID() == gameObj.GetInstanceID())
+                {
+                    continue;
+                }
+                //Checks if the gameobject can be seen by the boid (as I explained in the alignment function above)
+                if (Vector3.Distance(transform.position, gameObj.transform.position) <= detectionRange &&
+                    Quaternion.Angle(transform.rotation, gameObj.transform.rotation) <= viewAngle)
+                {
+                    //Gets the total position of boids around this component's boid
+                    averageFlockPos += gameObj.transform.position;
+                    ++i;
+                }
+            }
+            //Averages the total
+            averageFlockPos /= i;
+            return Quaternion.LookRotation(averageFlockPos, Vector3.up);
+        }
+        
     }
     #endregion
 }

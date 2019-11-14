@@ -12,6 +12,7 @@ public class createBoids : MonoBehaviour
     //Keeps track of how many boids the user wants
     public uint targetNumBoids;
     //Keeps track of how many boids there currently are
+    [HideInInspector]
     public List<GameObject> curBoids = new List<GameObject>();
 
     #endregion
