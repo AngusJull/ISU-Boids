@@ -47,9 +47,8 @@ public class boidBehaviours : MonoBehaviour
     //Applies all three boid rules
     private void boidRules()
     {
-        //Rotates from where it's currently pointing towards where alignment wants the boid to point, alignment strength sets the max rotation
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, alignment(), alignmentStrength * Time.deltaTime);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, approach(), approachStrength * Time.deltaTime);
+        transform.rotation = approach();
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, alignment(), alignmentStrength * Time.deltaTime);
     }
     private Quaternion alignment()
     {
@@ -68,11 +67,12 @@ public class boidBehaviours : MonoBehaviour
                     continue;
                 }
                 //Checks this scripts boid can see other boids before adding their headings to the calculations
-                if (Vector3.Distance(transform.position, boids[i].transform.position) <= detectionRange &&
-                    Vector3.Angle(transform.forward, boids[i].transform.forward) <= viewAngle)
+                if (Vector3.SqrMagnitude(transform.position - boids[i].transform.position) <= Mathf.Pow(detectionRange, 2) &&
+                    Vector3.Angle(transform.forward, transform.position - boids[i].transform.position) <= viewAngle)
                 {
-                    averageHeading = Quaternion.Lerp(averageHeading, boids[i].transform.rotation, (1f / (float)(i + 1)));
+                    
                 }
+                averageHeading = Quaternion.Lerp(averageHeading, boids[i].transform.rotation, (1f / (float)(i + 2)));
             }
             return averageHeading;
         }
@@ -86,26 +86,25 @@ public class boidBehaviours : MonoBehaviour
     {
         if (boids.Count > 1)
         {
-            Vector3 averageFlockPos = new Vector3(0, 0, 0);
-            //i stores the number of gameObjects that are included in the average
-            int i = 0;
+            Vector3 averageFlockPos = Vector3.zero;
             foreach (GameObject gameObj in boids)
             {
                 //Checks this scripts boid can see other boids before adding their positions to the calculations
                 if (Vector3.Distance(transform.position, gameObj.transform.position) <= detectionRange &&
-                    Vector3.Angle(transform.forward, gameObj.transform.forward) <= viewAngle)
+                    Vector3.Angle(transform.forward, (gameObj.transform.position - transform.position)) <= viewAngle)
                 {
-                    averageFlockPos += gameObj.transform.position;
-                    ++i;
+                    
                 }
+                averageFlockPos += gameObj.transform.position;
             }
             //Averages the total
-            averageFlockPos /= (float)i;
+            averageFlockPos /= boids.Count;
             Vector3 vectorToTarget = averageFlockPos - transform.position;
             //If a boid is already near the center of other boids, it won't try to get closer.
             if (vectorToTarget.magnitude > boidCenter)
             {
-                return transform.rotation * Quaternion.AngleAxis(Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg, Vector3.forward);
+                return transform.rotation * Quaternion.AngleAxis(Vector3.Angle(transform.forward, vectorToTarget), Vector3.forward);
+                //return transform.rotation * Quaternion.AngleAxis(Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg, Vector3.forward);
             }
         }
         return transform.rotation;

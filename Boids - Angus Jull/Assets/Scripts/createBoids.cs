@@ -14,7 +14,6 @@ public class createBoids : MonoBehaviour
     //Keeps track of how many boids there currently are
     [HideInInspector]
     public List<GameObject> curBoids = new List<GameObject>();
-
     #endregion
 
     #region Unity Functions
@@ -23,14 +22,14 @@ public class createBoids : MonoBehaviour
         if (targetNumBoids > 200)
         {
             targetNumBoids = 200;
-            Debug.Log("STOP, THATS TOO MANY BOIDS");
+            Debug.Log("Too many boids");
         }
         for (int i = 0; i <= targetNumBoids; i++)
         {
             //Creates a new boid
             GameObject newBoid = Instantiate(parentBoid);
             //Gives the boid a random direction
-            newBoid.transform.Rotate(0, 0, Random.Range(-180, 180));
+            newBoid.transform.Rotate(0, 0, Random.Range(-123, 155));
             //Adds the boid to the list of boids
             newBoid.GetComponent<boidBehaviours>().boids = curBoids;
             curBoids.Add(newBoid);
@@ -42,7 +41,7 @@ public class createBoids : MonoBehaviour
         if (targetNumBoids > 200)
         {
             targetNumBoids = 200;
-            Debug.Log("Too many boids, stop.");
+            Debug.Log("Too many boids");
         }
         //Checks if more boids are needed
         if (curBoids.Count < targetNumBoids)
