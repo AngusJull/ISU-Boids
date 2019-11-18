@@ -30,8 +30,7 @@ public class createBoids : MonoBehaviour
             //Creates a new boid
             GameObject newBoid = Instantiate(parentBoid);
             //Gives the boid a random direction
-            Vector3 vector3 = new Vector3(0, 0, Random.Range(-360, 360));
-            newBoid.transform.eulerAngles = vector3;
+            newBoid.transform.Rotate(0, 0, Random.Range(-180, 180));
             //Adds the boid to the list of boids
             newBoid.GetComponent<boidBehaviours>().boids = curBoids;
             curBoids.Add(newBoid);
@@ -53,8 +52,7 @@ public class createBoids : MonoBehaviour
                 //Creates a new boid
                 GameObject newBoid = Instantiate(parentBoid);
                 //Gives the boid a random direction
-                Vector3 vector3 = new Vector3(0, 0, Random.Range(-360, 360));
-                newBoid.transform.eulerAngles = vector3;
+                newBoid.transform.Rotate(0, 0, Random.Range(-180, 180));
                 //Adds the boid to the list of boids
                 newBoid.GetComponent<boidBehaviours>().boids = curBoids;
                 curBoids.Add(newBoid);
