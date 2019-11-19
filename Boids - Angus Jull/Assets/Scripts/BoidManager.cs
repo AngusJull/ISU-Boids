@@ -7,32 +7,37 @@ using UnityEngine;
 public class BoidManager : MonoBehaviour
 {
     #region Variables
-    //This is the boid prefab that is used to create all other boids
-    public GameObject parentBoid;
-    //Keeps track of how many boids the user wants
-    [Range(0, 200)]
-    public int targetNumBoids;
-    //Keeps track of how many boids there currently are
-    [HideInInspector]
-    public List<GameObject> curBoids = new List<GameObject>();
-
-    #endregion
-    public CameraBounds bounds = Camera.main.GetComponent<CameraBounds>();
-    public GameObject boidPrefab;
-    public BoidSettings boidSettings;
-    public List<Boid> boids = new List<Boid>();
+    //Sets the amount of boids to be created on start
     [Range(0, 200)]
     public int boidsOnStart;
+    private CameraBounds bounds;
+    public GameObject boidPrefab;
+    public BoidSettings settings;
+    public BoidBehaviours behaviours;
+    private List<Boid> boids = new List<Boid>();
+    #endregion
+
 
     #region Unity Functions
-    void Awake()
+    void Start()
     {
+        bounds = Camera.main.GetComponent<CameraBounds>();
         createBoids(boidsOnStart);
     }
     // FixedUpdate is called once per physics update
     void FixedUpdate()
     {
-        
+        foreach (Boid _boid in boids)
+        {
+            List<Transform> context = behaviours.getNearbyBoids(_boid, this);
+            /////Just to see.
+            //_boid.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
+
+            //Vector2 movement = behaviours.basicBoidBehaviours(_boid, context, this);
+            //movement *= settings.driveFactor;
+            //Vector2.ClampMagnitude(movement, settings.maxSpeed);
+            //_boid.move(movement);
+        }
     }
     #endregion
     //Creates a certain number of boids, equal to the value of the perameter numBoids
@@ -42,14 +47,13 @@ public class BoidManager : MonoBehaviour
         {
             //Creates a new boid
             GameObject newBoid = Instantiate(
-                parentBoid,
-                Random.insideUnitCircle * bounds.minimums.y, 
+                boidPrefab,
+                Random.insideUnitCircle * bounds.minimums.y,
                 Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)),
                 transform);
-            //Since lists are reference variables, they will always be up to date
-            newBoid.GetComponent<Boid>().settings = boidSettings;
-            newBoid.GetComponent<Boid>().boids = boids;
+            //Gives each boid a unique name
             newBoid.name = "Boid " + (transform.childCount + 1);
+            //Lets the boid manager keep track of which boid is which
             boids.Add(newBoid.GetComponent<Boid>());
         }
     }

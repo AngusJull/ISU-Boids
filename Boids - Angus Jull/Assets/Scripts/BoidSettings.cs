@@ -10,9 +10,11 @@ public class BoidSettings : ScriptableObject
     //MoveSpeed stores how fast the boid should move forward
     [Range(0.1f, 5f)]
     public float maxSpeed;
-    //Keeps track of how close boids need to be to be detected
+    [Range(1f, 10f)]
+    public float driveFactor;
+    //Keeps track of how close other boids need to be to be detected.
     [Range(1, 3)]
-    public float viewRange;
+    public float neighbourRadius;
     //This controls the field of view of the boid
     [Range(1, 180)]
     public float viewAngle;

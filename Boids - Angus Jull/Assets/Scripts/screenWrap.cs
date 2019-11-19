@@ -8,17 +8,19 @@ public class screenWrap : MonoBehaviour
 {
     #region Variables
     private CameraBounds bounds;
+    private SpriteRenderer spriteRenderer;
     #endregion
     void Start()
     {
         bounds = Camera.main.GetComponent<CameraBounds>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     #region Unity Functions
     // Update is called once per frame
     void FixedUpdate()
     {
         //If the player is no longer visible and they have moved over the screen boundaries, their x or y will be set to the opposite values
-        if (!GetComponent<SpriteRenderer>().isVisible)
+        if (!spriteRenderer.isVisible)
         {
             if (transform.position.x < bounds.minimums.x)
             {

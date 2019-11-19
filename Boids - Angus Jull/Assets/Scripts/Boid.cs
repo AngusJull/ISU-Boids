@@ -5,28 +5,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
-public class Boids : MonoBehaviour
+public class Boid : MonoBehaviour
 {
     #region Variables
-    [HideInInspector]
-    public BoidSettings settings;
-
-    [HideInInspector]
-    public List<Boid> boids;
-
-    private Collider2D boidCollider;
-    public Collider2D bCollider { get { return boidCollider; } }
+    private Collider2D bCollider;
+    public Collider2D boidCollider { get { return boidCollider; } }
     #endregion 
     
     #region Unity Methods
     void Start()
     {
-        boidCollider = GetComponent<Collider2D>();
+        bCollider = GetComponent<Collider2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+
+    }
+    public void move(Vector2 velocity)
+    {
+        transform.position += (Vector3)velocity * Time.deltaTime;
+        transform.up = velocity;
     }
     #endregion
 }

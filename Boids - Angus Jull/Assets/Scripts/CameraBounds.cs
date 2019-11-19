@@ -13,7 +13,7 @@ public class CameraBounds : MonoBehaviour
     
     #region Unity Methods
     //Sets the two Vector2s
-    void Start()
+    void Awake()
     {
         float vertExtent = GetComponent<Camera>().orthographicSize;
         float horzExtent = vertExtent * Screen.width / Screen.height;
