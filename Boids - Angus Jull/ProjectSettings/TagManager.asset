@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boid
-  - Boid Creator
+  - Boid Manager
   layers:
   - Default
   - TransparentFX
