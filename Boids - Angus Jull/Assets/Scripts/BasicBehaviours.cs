@@ -14,7 +14,7 @@ public class BasicBehaviours : ScriptableObject
         Collider2D[] colliders = Physics2D.OverlapCircleAll(boid.transform.position, manager.settings.neighbourRadius);
         foreach (Collider2D c in colliders)
         {
-            if (c != boid.boidCollider)
+            if (c != boid.boidCollider && Vector2.Angle(boid.Velocity, (Vector2)c.transform.position) <= manager.settings.viewAngle)
             {
                 context.Add(c.transform);
             }
@@ -81,16 +81,27 @@ public class BasicBehaviours : ScriptableObject
             //Compares the square magnitude 
             if (sqrDst < Mathf.Pow(manager.settings.avoidDistance, 2))
             {
+                //If the boids are directly on top of eachother
+                if (sqrDst == 0)
+                {
+                    //Add a random force with the maximum value to try and seperate the boids
+                    avoidForce += new Vector2(Random.Range(0.1f, 1), Random.Range(0.1f, 1)) * manager.settings.maxSpeed;
+                    ++nBoids;
+                }
+                //Add the vector from the other boid to this boid (in that direction)
                 avoidForce += (Vector2)(boid.transform.position - _boid.position) / sqrDst;
                 ++nBoids;
             }
         }
+        //Ensures no div by 0 errors
         if (nBoids > 0)
         {
             avoidForce /= nBoids;
         }
         return avoidForce;
     }
+    //Takes in a vector and returns a vector that is between the current velocity and that vector
+    //The returned vector has a magnitude dependant on that of the original, multiplied by the max speed and clamped to the maximum turning force
     Vector2 steerTowards(Boid boid, Vector2 targetVector, BoidManager manager)
     {
         Vector2 v = targetVector.normalized * manager.settings.maxSpeed - boid.Velocity;
