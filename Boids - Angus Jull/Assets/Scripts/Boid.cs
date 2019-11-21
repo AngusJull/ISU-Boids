@@ -9,12 +9,15 @@ public class Boid : MonoBehaviour
 {
     #region Variables
     private Collider2D bCollider;
-    public Collider2D boidCollider { get { return boidCollider; } }
+    public Collider2D boidCollider { get { return bCollider; } }
+
+    public Vector2 curVelocity;
     #endregion 
     
     #region Unity Methods
     void Start()
     {
+        curVelocity = transform.up;
         bCollider = GetComponent<Collider2D>();
     }
 

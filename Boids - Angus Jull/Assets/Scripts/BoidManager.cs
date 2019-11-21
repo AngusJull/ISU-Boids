@@ -13,11 +13,9 @@ public class BoidManager : MonoBehaviour
     private CameraBounds bounds;
     public GameObject boidPrefab;
     public BoidSettings settings;
-    public BoidBehaviours behaviours;
+    public BasicBehaviours behaviours;
     private List<Boid> boids = new List<Boid>();
     #endregion
-
-
     #region Unity Functions
     void Start()
     {
@@ -27,16 +25,15 @@ public class BoidManager : MonoBehaviour
     // FixedUpdate is called once per physics update
     void FixedUpdate()
     {
-        foreach (Boid _boid in boids)
+        foreach (Boid boid in boids)
         {
-            List<Transform> context = behaviours.getNearbyBoids(_boid, this);
-            /////Just to see.
-            //_boid.GetComponentInChildren<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, context.Count / 6f);
-
-            //Vector2 movement = behaviours.basicBoidBehaviours(_boid, context, this);
-            //movement *= settings.driveFactor;
-            //Vector2.ClampMagnitude(movement, settings.maxSpeed);
-            //_boid.move(movement);
+            //Finds all the boids within the boids neighbour radius
+            List<Transform> context = behaviours.getNearbyBoids(boid, this);
+            Vector2 movement = behaviours.basicBoidBehaviours(boid, context, this);
+            //Applies the movement determined by the behaviours of the boid to the boid.
+            movement *= settings.driveFactor;
+            Vector2.ClampMagnitude(movement, settings.maxSpeed);
+            boid.move(movement);
         }
     }
     #endregion
@@ -48,7 +45,7 @@ public class BoidManager : MonoBehaviour
             //Creates a new boid
             GameObject newBoid = Instantiate(
                 boidPrefab,
-                Random.insideUnitCircle * bounds.minimums.y,
+                new Vector3(Random.Range(bounds.minimums.x, bounds.maximums.x), Random.Range(bounds.minimums.y, bounds.maximums.y)),
                 Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)),
                 transform);
             //Gives each boid a unique name

@@ -8,24 +8,23 @@ using UnityEngine;
 public class BoidSettings : ScriptableObject
 {
     //MoveSpeed stores how fast the boid should move forward
-    [Range(0.1f, 5f)]
+    [Range(0.1f, 10)]
     public float maxSpeed;
-    [Range(1f, 10f)]
+    [Range(1, 10)]
     public float driveFactor;
     //Keeps track of how close other boids need to be to be detected.
-    [Range(1, 3)]
+    [Range(1, 2)]
     public float neighbourRadius;
-    //This controls the field of view of the boid
-    [Range(1, 180)]
-    public float viewAngle;
     //Sets the distance other boids must be within for a boid to avoid them
-    [Range(0, 1)]
+    [Range(0, 1f)]
     public float avoidDistance;
     //Sets how much of an affect each rule will have on the rotation of the boid
     [Range(0, 1)]
     public float alignmentWeight;
     [Range(0, 1)]
     public float approachWeight;
+    [Range(0, 1)]
+    public float approachSmoothingFactor = 0.5f;
     [Range(0, 1)]
     public float avoidWeight;
 }

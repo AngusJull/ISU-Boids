@@ -188,7 +188,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.05
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -251,7 +251,7 @@ MonoBehaviour:
   boidPrefab: {fileID: 6583592413431010206, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
     type: 3}
   settings: {fileID: 11400000, guid: 9170baba84236d74aad6cdbe60a4b320, type: 2}
-  behaviours: {fileID: 11400000, guid: 877c889affe455149a8f323b9f8a4cb2, type: 2}
+  behaviours: {fileID: 11400000, guid: 695bce8ce919be94492fe1f5e709560d, type: 2}
 --- !u!4 &845469349
 Transform:
   m_ObjectHideFlags: 0
@@ -266,92 +266,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1832969672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6583592413431010206, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-    type: 3}
-  m_PrefabInstance: {fileID: 6583592413713710457}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1832969674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1832969672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42ad946de382d134bb69340d4ecfd2c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1001 &6583592413713710457
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6583592413431010206, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_Name
-      value: Boid
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6583592413431010194, guid: a9da003fa77f1dd4bbb5bbe40dfe3378,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6583592413431010195, guid: a9da003fa77f1dd4bbb5bbe40dfe3378, type: 3}
-    - {fileID: 6583592413431010192, guid: a9da003fa77f1dd4bbb5bbe40dfe3378, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: a9da003fa77f1dd4bbb5bbe40dfe3378, type: 3}
