@@ -5,13 +5,13 @@
 
 <head>
     <title> Boids - Angus Jull</title>
-    <link rel="style" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <br>
-        <h1 style="text-align:center">Angus Jull's Boids Website</h1>
+        <h1>Angus Jull's Boids Website</h1>
     	<br>
     	
     </header>
@@ -21,23 +21,45 @@
     <p>This website was created to showcase <i>boids</i> creatures which follow three basic rules: </p>
 
     <ol>
-    <li>Align</li>
-    <li>Avoid</li>
-    <li>Approach</li>
+    <li>Align: Match the speeds and directions of other boids</li>
+    <li>Avoid: Stay out of a certain range of other boids - try not to hit eachother</li>
+    <li>Approach: Get close to the average position of other boids</li>
     </ol>
 
     <p>
-    To sum it up: Align tells the boids to try and move in the same direction as other boids near it, Avoid tells boids
-    to try and avoid collisions with other boids, and Approach tells the boids to try and move to the center of where other boids are.
-    <br>
-    <br>
-    These rules give rise to intriguing flocking behaviours.
-    </p>
+	Each boid looks around it, finds the boids near it, and finds the direction it needs to move in to follow the three rules as best it can.
+	Interestingsly, these simple behaviours create complicated flocking - a life simulation.
+	</p>
+
+	<br>
+	
+	<p>
+	Boids and their rules were first defined by Craig Reynolds in 1986. Birds, schools of fish, and swarms of insects are all common examples
+	of creates which follow the same rules. These simple creatures may look useless and trivial, but interestingly they do have applications 
+	in the real world.
+	</p>
+
+	<br>
 
     <h3 id="subtitle">How To Use</h3>
-    <p></p>
-    
+    <p>
+	The simulations below should open automaticaly and start automaticaly as well. By moving the sliders you can alter the 
+	strength of the boid rules, the number of boids, and other perameters. Try to observe each rule in action. 
+	</p>
 
+	<h3 id="subtitle">Applications</h3>
+	<p>
+	These creatures do have applications beyond simulations on websites:
+	</p>
+	<ul>
+	<li>Flocking behaviours like boids used to simulate flocks and realistic movement of any sort of animal in animation</li>
+	<li>Flocking and boids have been used to simulate human movement in crowds, showing that even a change in the direction of
+	5% of people was enough to change the direction of the entire group, or that in avoiding certain people a crowd would behave 
+	like a school of fish</li>
+	<li>The boid rules have been used for partical swarm optimization, in something called Boid Partical Swarm Optimization</li>
+	<li>Boids have been used for visualising data</li>
+	<li>Boids have even been used to 
+	</ul>
+   
 </body>
-
 </html>
