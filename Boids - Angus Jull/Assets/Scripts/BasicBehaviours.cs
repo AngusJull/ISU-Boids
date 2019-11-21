@@ -24,10 +24,17 @@ public class BasicBehaviours : ScriptableObject
     public Vector2 basicBoidBehaviours(Boid boid, List<Transform> context, BoidManager manager)
     {
         Vector2 movement = Vector2.zero;
-        movement += Vector2.ClampMagnitude(align(boid, context, manager) * manager.settings.alignmentWeight, manager.settings.alignmentWeight);
-        movement += Vector2.ClampMagnitude(approach(boid, context, manager) * manager.settings.approachWeight, manager.settings.approachWeight);
-        movement += Vector2.ClampMagnitude(avoid(boid, context, manager) * manager.settings.avoidWeight, manager.settings.avoidWeight);
-        return movement;
+        movement += steerTowards(boid, align(boid, context, manager), manager) * manager.settings.alignmentWeight;
+        movement += steerTowards(boid, approach(boid, context, manager), manager) * manager.settings.approachWeight;
+        movement += steerTowards(boid, avoid(boid, context, manager), manager) * manager.settings.avoidWeight;
+
+        boid.Velocity += movement * Time.deltaTime;
+        float speed = boid.Velocity.magnitude;
+        boid.Velocity.Normalize();
+        speed = Mathf.Clamp(speed, manager.settings.minSpeed, manager.settings.maxSpeed);
+        boid.Velocity *= speed;
+
+        return boid.Velocity;
     }
     private Vector2 align(Boid boid, List<Transform> context, BoidManager manager)
     {
@@ -49,7 +56,7 @@ public class BasicBehaviours : ScriptableObject
         //If no boids around this boid, return no adjustment.
         if (context.Count == 0)
         {
-            return Vector2.zero;
+            return boid.Velocity.normalized;
         }
         Vector2 approachVector = Vector2.zero;
         foreach (Transform _boid in context)
@@ -57,27 +64,24 @@ public class BasicBehaviours : ScriptableObject
             approachVector += (Vector2)_boid.position;
         }
         //Find the average position of the boids in context and then find the vector between the transform and it
-        approachVector /= context.Count;
-        approachVector -= (Vector2)boid.transform.position;
-
-        approachVector = Vector2.SmoothDamp(boid.transform.up, approachVector.normalized, ref boid.curVelocity, manager.settings.approachSmoothingFactor);
-        return approachVector; 
+        return approachVector / context.Count - (Vector2)boid.transform.position;
     }
     private Vector2 avoid(Boid boid, List<Transform> context, BoidManager manager)
     {
         if(context.Count == 0)
         {
-            return Vector2.zero;
+            return boid.Velocity.normalized;
         }
         //Stores the number of boids that are being avoided
         int nBoids = 0;
         Vector2 avoidForce = Vector2.zero;
         foreach(Transform _boid in context)
         {
+            float sqrDst = Vector2.SqrMagnitude(_boid.position - boid.transform.position);
             //Compares the square magnitude 
-            if (Vector2.SqrMagnitude(_boid.position - boid.transform.position) < Mathf.Pow(manager.settings.avoidDistance, 2))
+            if (sqrDst < Mathf.Pow(manager.settings.avoidDistance, 2))
             {
-                avoidForce += (Vector2)(boid.transform.position - _boid.position);
+                avoidForce += (Vector2)(boid.transform.position - _boid.position) / sqrDst;
                 ++nBoids;
             }
         }
@@ -86,5 +90,10 @@ public class BasicBehaviours : ScriptableObject
             avoidForce /= nBoids;
         }
         return avoidForce;
+    }
+    Vector2 steerTowards(Boid boid, Vector2 targetVector, BoidManager manager)
+    {
+        Vector2 v = targetVector.normalized * manager.settings.maxSpeed - boid.Velocity;
+        return Vector2.ClampMagnitude(v, manager.settings.maxSteerForce);
     }
 }

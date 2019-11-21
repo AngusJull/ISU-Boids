@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff804473e764cb046ac4a970c3cddc6c, type: 3}
   m_Name: Basic Settings
   m_EditorClassIdentifier: 
-  maxSpeed: 0.1
-  driveFactor: 3.9
-  neighbourRadius: 1.73
-  avoidDistance: 0.67
-  alignmentWeight: 0.12
-  approachWeight: 0.67
-  approachSmoothingFactor: 0.61
-  avoidWeight: 0.73
+  maxSpeed: 2.6
+  minSpeed: 3.3
+  neighbourRadius: 1
+  avoidDistance: 0.58
+  alignmentWeight: 3
+  approachWeight: 1
+  avoidWeight: 2.84
+  maxSteerForce: 1

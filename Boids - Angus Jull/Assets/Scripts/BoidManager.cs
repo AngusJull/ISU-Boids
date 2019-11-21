@@ -29,11 +29,8 @@ public class BoidManager : MonoBehaviour
         {
             //Finds all the boids within the boids neighbour radius
             List<Transform> context = behaviours.getNearbyBoids(boid, this);
-            Vector2 movement = behaviours.basicBoidBehaviours(boid, context, this);
+            behaviours.basicBoidBehaviours(boid, context, this);
             //Applies the movement determined by the behaviours of the boid to the boid.
-            movement *= settings.driveFactor;
-            Vector2.ClampMagnitude(movement, settings.maxSpeed);
-            boid.move(movement);
         }
     }
     #endregion

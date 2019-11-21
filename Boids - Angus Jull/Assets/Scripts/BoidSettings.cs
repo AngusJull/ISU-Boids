@@ -10,8 +10,8 @@ public class BoidSettings : ScriptableObject
     //MoveSpeed stores how fast the boid should move forward
     [Range(0.1f, 10)]
     public float maxSpeed;
-    [Range(1, 10)]
-    public float driveFactor;
+    [Range(0.1f, 10)]
+    public float minSpeed;
     //Keeps track of how close other boids need to be to be detected.
     [Range(1, 2)]
     public float neighbourRadius;
@@ -19,12 +19,12 @@ public class BoidSettings : ScriptableObject
     [Range(0, 1f)]
     public float avoidDistance;
     //Sets how much of an affect each rule will have on the rotation of the boid
-    [Range(0, 1)]
+    [Range(0, 3)]
     public float alignmentWeight;
-    [Range(0, 1)]
+    [Range(0, 3)]
     public float approachWeight;
-    [Range(0, 1)]
-    public float approachSmoothingFactor = 0.5f;
-    [Range(0, 1)]
+    [Range(0, 3)]
     public float avoidWeight;
+    [Range(0, 1)]
+    public float maxSteerForce;
 }

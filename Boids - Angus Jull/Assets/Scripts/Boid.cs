@@ -11,24 +11,23 @@ public class Boid : MonoBehaviour
     private Collider2D bCollider;
     public Collider2D boidCollider { get { return bCollider; } }
 
-    public Vector2 curVelocity;
+    public Vector2 Velocity;
     #endregion 
     
     #region Unity Methods
     void Start()
     {
-        curVelocity = transform.up;
+        Velocity = transform.up;
         bCollider = GetComponent<Collider2D>();
     }
-
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-
+        move(Velocity);
     }
     public void move(Vector2 velocity)
     {
         transform.position += (Vector3)velocity * Time.deltaTime;
-        transform.up = velocity;
+        transform.up = velocity.normalized;
     }
     #endregion
 }
