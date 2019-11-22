@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff804473e764cb046ac4a970c3cddc6c, type: 3}
   m_Name: Basic Settings
   m_EditorClassIdentifier: 
-  maxSpeed: 4.4
+  maxSpeed: 6
   minSpeed: 3
-  neighbourRadius: 2
-  viewAngle: 113
-  avoidDistance: 0.78
-  sqrAvoidDistance: 0
-  alignmentWeight: 1.24
-  approachWeight: 0.88
-  avoidWeight: 2.32
-  maxSteerForce: 3.93
+  neighbourRadius: 1.3
+  sqrNeighbourRadius: 1.6899998
+  viewAngle: 145
+  avoidDistance: 0.8
+  sqrAvoidDistance: 0.64000005
+  avoidWallWeight: 1.8
+  wallAvoidDistance: 3.5
+  sqrWallAvoidDistance: 12.25
+  alignmentWeight: 3.2
+  approachWeight: 1.1
+  avoidWeight: 5
+  maxSteerForce: 4

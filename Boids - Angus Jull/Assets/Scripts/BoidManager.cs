@@ -16,9 +16,15 @@ public class BoidManager : MonoBehaviour
     public BasicBehaviours behaviours;
     private List<Boid> boids = new List<Boid>();
     #endregion
+    public CameraBounds getBounds() { return bounds; }
     #region Unity Functions
     void Start()
     {
+        //Setting some values form the scriptable object since they don't always do so by themselves.
+        settings.sqrAvoidDistance = Mathf.Pow(settings.avoidDistance, 2);
+        settings.sqrNeighbourRadius = Mathf.Pow(settings.neighbourRadius, 2);
+        settings.sqrWallAvoidDistance = Mathf.Pow(settings.wallAvoidDistance, 2);
+        Debug.Log(settings.sqrWallAvoidDistance);
         bounds = Camera.main.GetComponent<CameraBounds>();
         createBoids(boidsOnStart);
     }
@@ -46,7 +52,7 @@ public class BoidManager : MonoBehaviour
                 Quaternion.Euler(Vector3.forward * Random.Range(0, 360f)),
                 transform);
             //Gives each boid a unique name
-            newBoid.name = "Boid " + (transform.childCount + 1);
+            newBoid.name = "Boid " + (transform.childCount);
             //Lets the boid manager keep track of which boid is which
             boids.Add(newBoid.GetComponent<Boid>());
         }

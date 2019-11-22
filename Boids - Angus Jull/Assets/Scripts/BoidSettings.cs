@@ -15,6 +15,8 @@ public class BoidSettings : ScriptableObject
     //Keeps track of how close other boids need to be to be detected.
     [Range(0, 2)]
     public float neighbourRadius;
+    [HideInInspector]
+    public float sqrNeighbourRadius;
     [Range(0, 180)]
     public int viewAngle;
     //Sets the distance other boids must be within for a boid to avoid them
@@ -22,17 +24,19 @@ public class BoidSettings : ScriptableObject
     public float avoidDistance;
     [HideInInspector]
     public float sqrAvoidDistance;
+    [Range(1, 5)]
+    public float avoidWallWeight;
+    [Range(1, 5)]
+    public float wallAvoidDistance;
+    [HideInInspector]
+    public float sqrWallAvoidDistance;
     //Sets how much of an affect each rule will have on the rotation of the boid
-    [Range(0, 3)]
+    [Range(1, 5)]
     public float alignmentWeight;
-    [Range(0, 3)]
+    [Range(1, 5)]
     public float approachWeight;
-    [Range(0, 3)]
+    [Range(1, 5)]
     public float avoidWeight;
-    [Range(0, 5)]
+    [Range(1, 5)]
     public float maxSteerForce;
-    public void Awake()
-    {
-        sqrAvoidDistance = Mathf.Pow(avoidDistance, 2);
-    }
 }

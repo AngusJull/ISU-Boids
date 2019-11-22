@@ -19,6 +19,8 @@ public class CameraBounds : MonoBehaviour
         float horzExtent = vertExtent * Screen.width / Screen.height;
         minimums.Set(-1 * horzExtent, -1 * vertExtent);
         maximums.Set(horzExtent, vertExtent);
+        Debug.Log(minimums.ToString());
+        Debug.Log(maximums.ToString());
     }
     #endregion
 }
