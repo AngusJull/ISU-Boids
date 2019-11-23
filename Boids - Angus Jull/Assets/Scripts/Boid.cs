@@ -19,6 +19,7 @@ public class Boid : MonoBehaviour
     {
         Velocity = transform.up;
         bCollider = GetComponent<Collider2D>();
+        GetComponentInChildren<SpriteRenderer>().color = Random.ColorHSV(0, 1, 0.5f, 0.6f, 1, 1);
     }
     public void FixedUpdate()
     {

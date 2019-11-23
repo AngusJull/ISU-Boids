@@ -24,16 +24,30 @@ public class BasicBehaviours : ScriptableObject
     public Vector2 basicBoidBehaviours(Boid boid, List<Transform> context, BoidManager manager)
     {
         Vector2 movement = Vector2.zero;
-        movement += steerTowards(boid, align(boid, context, manager), manager) * manager.settings.alignmentWeight;
-        movement += steerTowards(boid, approach(boid, context, manager), manager) * manager.settings.approachWeight;
-        movement += steerTowards(boid, avoid(boid, context, manager), manager) * manager.settings.avoidWeight;
-        movement += steerTowards(boid, avoidSquareBounds(boid, manager), manager) * manager.settings.avoidWallWeight;
+        //movement += steerTowards(boid, align(boid, context, manager), manager) * manager.settings.alignmentWeight;
+        //movement += steerTowards(boid, approach(boid, context, manager), manager) * manager.settings.approachWeight;
+        //movement += steerTowards(boid, avoid(boid, context, manager), manager) * manager.settings.avoidWeight;
+        //movement += steerTowards(boid, avoidSquareBounds(boid, manager), manager) * manager.settings.avoidWallWeight;
+
+        //boid.Velocity += movement * Time.deltaTime;
+        //float speed = boid.Velocity.magnitude;
+        //boid.Velocity.Normalize();
+        //speed = Mathf.Clamp(speed, manager.settings.minSpeed, manager.settings.maxSpeed);
+        //boid.Velocity *= speed;
+
+        movement += weightVector(align(boid, context, manager), manager.settings.alignmentWeight);
+        movement += weightVector(approach(boid, context, manager), manager.settings.approachWeight);
+        movement += weightVector(avoid(boid, context, manager), manager.settings.avoidWeight);
+
+        movement -= boid.Velocity;
+        movement = Vector2.ClampMagnitude(movement, manager.settings.maxSteerForce);
 
         boid.Velocity += movement * Time.deltaTime;
         float speed = boid.Velocity.magnitude;
-        boid.Velocity.Normalize();
+        boid.Velocity /= speed;
         speed = Mathf.Clamp(speed, manager.settings.minSpeed, manager.settings.maxSpeed);
         boid.Velocity *= speed;
+
 
         return boid.Velocity;
     }
@@ -131,11 +145,12 @@ public class BasicBehaviours : ScriptableObject
     //The returned vector has a magnitude dependant on that of the original, multiplied by the max speed and clamped to the maximum turning force
     Vector2 steerTowards(Boid boid, Vector2 targetVector, BoidManager manager)
     {
-        if (targetVector == Vector2.zero)
-        {
-            return Vector2.zero;
-        }
         Vector2 v = targetVector.normalized * manager.settings.maxSpeed - boid.Velocity;
         return Vector2.ClampMagnitude(v, manager.settings.maxSteerForce);
+    }
+    Vector2 weightandClampVector(Vector2 velocity, float clamp)
+    {
+        velocity *= clamp;
+        return Vector2.ClampMagnitude(velocity, clamp);
     }
 }

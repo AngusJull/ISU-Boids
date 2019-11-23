@@ -8,7 +8,7 @@ public class BoidManager : MonoBehaviour
 {
     #region Variables
     //Sets the amount of boids to be created on start
-    [Range(0, 200)]
+    [Range(0, 1000)]
     public int boidsOnStart;
     private CameraBounds bounds;
     public GameObject boidPrefab;

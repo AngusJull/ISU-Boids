@@ -24,7 +24,7 @@ public class BoidSettings : ScriptableObject
     public float avoidDistance;
     [HideInInspector]
     public float sqrAvoidDistance;
-    [Range(1, 5)]
+    [Range(0, 5)]
     public float avoidWallWeight;
     [Range(1, 5)]
     public float wallAvoidDistance;
