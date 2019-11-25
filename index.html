@@ -1,65 +1,76 @@
 ﻿<!DOCTYPE html>
 
-<html lang = "en">
-<meta charset = "utf-8">
+<html lang = "en-us">
 
 <head>
     <title> Boids - Angus Jull</title>
-    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Boids - Angus Jull</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/Boids-WebGL.json", {onProgress: UnityProgress});
+    </script>
 </head>
 
 <body>
     <header>
         <br>
-        <h1>Angus Jull's Boids Website</h1>
+		<h1>Boids : Simulated Flocking</h1>
+		<h3>By Angus Jull</h3>
     	<br>
-    	
     </header>
-   
-    <h3 id="subtitle">Introduction</h3>
-    <br>
-    <p>This website was created to showcase <i>boids</i> creatures which follow three basic rules: </p>
-
-    <ol>
-    <li>Align: Match the speeds and directions of other boids</li>
-    <li>Avoid: Stay out of a certain range of other boids - try not to hit eachother</li>
-    <li>Approach: Get close to the average position of other boids</li>
-    </ol>
-
-    <p>
-	Each boid looks around it, finds the boids near it, and finds the direction it needs to move in to follow the three rules as best it can.
-	Interestingsly, these simple behaviours create complicated flocking - a life simulation.
-	</p>
-
+	<h3>Introduction</h3>
 	<br>
 	
-	<p>
-	Boids and their rules were first defined by Craig Reynolds in 1986. Birds, schools of fish, and swarms of insects are all common examples
-	of creates which follow the same rules. These simple creatures may look useless and trivial, but interestingly they do have applications 
-	in the real world.
+    <p>This website was created to showcase <i>boids</i>, simple creatures which follow three basic rules: </p>
+    <ol>
+    <li>Align: Match the speed and direction of other boids</li>
+    <li>Avoid: Move away from other boids which are too close</li>
+    <li>Approach: Get close to where most boids are</li>
+    </ol>
+    <p> Each boid looks around it, finds the boids near it (within a certain view range), and finds the direction it 
+	    needs to move in to follow the three rules as best it can.
+	    Interestingsly, these simple behaviours create complicated flocking behaviours like those seen in nature. 
 	</p>
-
+	<p> Boids and their rules were first defined by Craig Reynolds in 1986. The rules have been observed in 
+	    nature and are what we consider the core rules of flocking. These simple creatures may look useless and trivial, 
+	    but interestingly they do have applications in the real world.
+	</p>
 	<br>
 
-    <h3 id="subtitle">How To Use</h3>
-    <p>
-	The simulations below should open automaticaly and start automaticaly as well. By moving the sliders you can alter the 
-	strength of the boid rules, the number of boids, and other perameters. Try to observe each rule in action. 
+	<h3>How To Use</h3>
+    <p> The simulation below should start automatically (it may take some time to load). By moving the sliders you can alter the 
+	    strength of the boid rules to see each of their effects.
 	</p>
+	<br>
 
-	<h3 id="subtitle">Applications</h3>
-	<p>
-	These creatures do have applications beyond simulations on websites:
-	</p>
+	<div class="webgl-content">
+		<div id="unityContainer" style="width: 960px; height: 600px"></div>
+		<div class="footer">
+			<div class="webgl-logo"></div>
+			<div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+			<div class="title">Boids - Angus Jull</div>
+		</div>
+	</div>
+
+	<h3>Applications</h3>
+	<p>These creatures do have applications beyond simulations on websites:</p>
 	<ul>
-	<li>Flocking behaviours like boids used to simulate flocks and realistic movement of any sort of animal in animation</li>
-	<li>Flocking and boids have been used to simulate human movement in crowds, showing that even a change in the direction of
-	5% of people was enough to change the direction of the entire group, or that in avoiding certain people a crowd would behave 
-	like a school of fish</li>
-	<li>The boid rules have been used for partical swarm optimization, in something called Boid Partical Swarm Optimization</li>
-	<li>Boids have been used for visualising data</li>
-	<li>Boids have even been used to 
+		<li>Flocking rules have been used to simulate flocks and realistic movement of any sort of animal in animation</li>
+		<li>The same rules that boids use have predicted human movement in crowds, showing that even a change in the direction of
+		5% of people was enough to change the direction of the entire group, or that in avoiding certain people a crowd would behave 
+		like a school of fish</li>
+		<li>Boids have been used for partical swarm optimization, in something called Boid Partical Swarm Optimization</li>
+		<li>Boids have been used for visualising data</li>
+		<li>It has been proposed that unmaned drones follow the same rules as boids</li>
+		<li>Somehow, flocking was used to automatically program multi channel radio stations</li> 
+		<li>They look really,<i> really, really cool.</i></li>
 	</ul>
-   
+	<br>
 </body>
 </html>
