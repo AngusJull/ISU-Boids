@@ -7,14 +7,8 @@
 
 	<link rel="stylesheet" href="style.css">
 
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="Build/UnityLoader.js"></script>
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/WebGL export.json", {onProgress: UnityProgress});
-    </script>
+	<script src="Build/UnityLoader.js"></script>
+	<script> var unityInstance = UnityLoader.instantiate("unityContainer", "Build/ISU-Boids.json");</script>
 </head>
 
 <body>
@@ -47,21 +41,8 @@
     <p> The simulation below should start automatically (it may take some time to load). By moving the sliders you can alter the 
 	    strength of the boid rules to see each of their effects.
 	</p>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-    <div class="webgl-content">
-	    <div id="unityContainer" style="width: 960px; height: 600px"></div>
-		<div class="footer">
-			<div class="webgl-logo"></div>
-			<div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-			<div class="title">Boids - Angus Jull</div>
-		</div>
-	</div>
+	
+	<div id="unityContainer" style="width: 960px; height: 600px; margin-left: 20%; margin-right: 20%"></div>
 
 	<h3>Applications</h3>
 	<p>These creatures do have applications beyond simulations on websites:</p>
