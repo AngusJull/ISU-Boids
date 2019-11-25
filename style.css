@@ -8,6 +8,9 @@ header{
 body{
 	font-family: Verdana, Arial;
 	background-color: #d2dae2;
+	color: #485460;
+	margin-left: 20%;
+	margin-right: 20%;
 }
 h3{
 	color: #1e272e;
@@ -16,9 +19,6 @@ h3{
 }
 p{
 	margin-top: 10px;
-	color: #485460;
-	margin-left: 20%;
-	margin-right: 20%;
 }
 ol{
 	font-size: 105%;
