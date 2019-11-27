@@ -1,4 +1,4 @@
 ## ISU-Boids
 A 2D boids simulation made in Unity.
 
-Please do not copy any of this code without my permission
+Thank you to Sebastian Lague and to Boards To Bits Games for inspiration and a few pointers on how to code boids and some of their methods. 
